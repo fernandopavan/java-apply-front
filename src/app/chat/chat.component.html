@@ -1,33 +1,39 @@
-<div id="main-content" class="container">
+<div class="create-page">
+    <mat-toolbar>
+        <span>CHAT com Angular e Spring Boot/Security</span>
+    </mat-toolbar>
 
-    <div class="row">
-        <div class="col-md-12">
-            {{ greeting }}
+    <div class="page-content" style="padding: 30px 20px;">
+        <div class="row">
+            <div class="col-md-6">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <button mat-raised-button class="submit-button" style="margin-right: 5px;" color="primary"
+                            (click)="connect()" type="submit">Entrar</button>
+                        <button mat-raised-button class="submit-button" color="default" (click)="disconnect()"
+                            type="submit">Sair
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-6">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label style="margin-right: 5px;">Digite alguma coisa: </label>
+                        <input type="text" [(ngModel)]="message" class="form-control" style="margin-right: 5px;"
+                            name="message"> <br>
+                    </div>
+                    <button mat-raised-button (click)="sendMessage()" class="submit-button" color="primary"
+                        type="submit">Enviar</button>
+                </form>
+            </div>
         </div>
+
+        <div style="margin: 20px 0px;">
+            <p style="margin: 20px 0px;"><b>Obs.:</b> Não realizado o ajuste para adicionar as mensagens uma abaixo da outra via HTML/JS.</p>
+            <h5> {{ msgRecebida }}</h5>
+        </div>
+
     </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="connect">WebSocket connection:</label>
-                    <button (click)="connect()" class="btn btn-default" type="submit">Connect</button>
-                    <button (click)="disconnect()" class="btn btn-default" type="submit" disabled="disabled">Disconnect
-                    </button>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="name">What is your name?</label>
-                    <input type="text" [(ngModel)]="message" class="form-control" name="message"> <br>
-                </div>
-                <button (click)="sendMessage()" class="btn btn-default" type="submit">Send</button>
-            </form>
-        </div>
-
-        <p> {{ greeting }}</p>
-    </div>
-
 </div>

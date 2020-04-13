@@ -1,64 +1,60 @@
-import SockJS from "sockjs-client"
-import { Stomp } from "@stomp/stompjs"
-import { ChatComponent } from './chat.component';
+// import SockJS from "sockjs-client"
+// import { Stomp } from "@stomp/stompjs"
+// import { ChatComponent } from './chat.component';
+// import { API_CONFIG } from '../config/api.config';
 
-export class WebSocketAPI {
+// export class WebSocketAPI {
 
-  username = localStorage.getItem('localUser')['email'];
+//   topic: string = "/topic/public";
+//   stompClient: any;
+//   chatComponent: ChatComponent;
+//   username: string = "";
 
-  topic: string = "/topic/public";
-  stompClient: any;
-  chatComponent: ChatComponent;
+//   constructor(chatComponent: ChatComponent, username: string) {
+//     this.chatComponent = chatComponent;
+//     this.username = username;
+//   }
 
-  constructor(chatComponent: ChatComponent) {
-    this.chatComponent = chatComponent;
-  }
+//   connect() {
+//     this.stompClient = Stomp.over(new SockJS(API_CONFIG.baseUrl + '/ws'));
+//     this.stompClient.connect({}, this.connectionSuccess());
+//   };
 
-  connect() {
-    let ws = new SockJS('http://localhost:8080/api/ws');
-    this.stompClient = Stomp.over(ws);
+//   connectionSuccess() {
+//     if (this.stompClient === null || this.stompClient === undefined) {
+//       return this.connect();
+//     }
 
-    this.stompClient.connect({}, function (frame) {
-      this.stompClient.subscribe("/topic/public", function (sdkEvent) {
-        this.onMessageReceived(sdkEvent);
-        this.stompClient.send("/chat.add", {},
-          JSON.stringify({ sender: this.username, type: 'JOIN' }))
-      });
+//     console.log("Conectado!");
 
-    }, this.errorCallBack);
+//     setTimeout(() => {
+//       this.stompClient.subscribe("/topic/public", this.onMessageReceived);
+//       this.stompClient.send("/chat.add", {}, JSON.stringify({ sender: this.username, type: 'JOIN' }));
+//     }, 2000);
 
-  };
+//   }
 
-  disconnect() {
-    if (this.stompClient !== null) {
-      this.stompClient.disconnect();
-    }
-    console.log("Desconectado!");
-  }
+//   disconnect() {
+//     if (this.stompClient !== null || this.stompClient !== undefined) {
+//       this.stompClient.disconnect();
+//     }
+//     console.log("Desconectado!");
+//   }
 
-  errorCallBack(error) {
-    console.log("errorCallBack -> " + error)
-    setTimeout(() => {
-      this.connect();
-    }, 5000);
-  }
+//   send(message) {
+//     let chatMessage = {
+//       sender: this.username,
+//       content: message,
+//       type: 'CHAT'
+//     };
 
-  send(message) {
-    let chatMessage = {
-      sender: this.username,
-      content: message,
-      type: 'CHAT'
-    };
-    console.log("chamando a API de chat via soquete da web");
-    this.stompClient.send("/chat.send", {}, JSON.stringify(chatMessage));
-  }
+//     console.log("Enviando mensagem: " + chatMessage.sender + ' = ' + chatMessage.content);
+//     this.stompClient.send("/chat.send", {}, JSON.stringify(chatMessage));
+//   }
 
-  onMessageReceived(message) {
-    var message = JSON.parse(message.body);
+//   onMessageReceived(message) {
+//     var message = JSON.parse(message.body);
+//     console.log("Mensagem recebida: " + message.sender);
+//   }
 
-    console.log("Mensagem recebida: " + message);
-
-    this.chatComponent.handleMessage(this.username + ': ' + JSON.stringify(message.body));
-  }
-
-}
+// }

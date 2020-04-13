@@ -43,7 +43,7 @@ export class AddUserComponent implements OnInit {
       { type: 'maxlength', message: 'Naturalizade deve possuir no máximo 50 caracteres.' },
     ],
     'cpf': [
-      { type: 'required', message: 'CPF é obrigatório.' },
+      { type: 'required', message: 'CPF é obrigatório. Somente Nº' },
     ],
     'senha': [
       { type: 'required', message: 'Senha é obrigatória.' },
