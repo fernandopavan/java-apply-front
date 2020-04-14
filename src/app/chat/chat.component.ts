@@ -68,12 +68,12 @@ export class ChatComponent implements OnInit {
   }
 
   onMessageReceived(message) {
-    const message = JSON.parse(message.body);
+    const messageParse = JSON.parse(message.body);
 
-    console.log('Recebida: ' + message);
+    console.log('Recebida: ' + messageParse);
 
-    const type = message.type;
-    const user = message.sender;
+    const type = messageParse.type;
+    const user = messageParse.sender;
 
     if (type === 'JOIN') {
       this.msgRecebida = user + ' ENTROU no CHAT!';
@@ -81,7 +81,7 @@ export class ChatComponent implements OnInit {
     }
 
     if (type === 'CHAT') {
-      this.msgRecebida = user + ' diz: ' + message.content;
+      this.msgRecebida = user + ' diz: ' + messageParse.content;
       return;
     }
 

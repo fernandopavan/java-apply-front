@@ -50,6 +50,9 @@ export class ErrorInterceptor implements HttpInterceptor {
     }
 
     handle403() {
+        if (this.storage.getLocalUser() == null) {
+            return;
+        }
         Swal.fire('Erro 403: sem permissão', 'Você tem permissão para esse recurso?', 'question');
     }
 
