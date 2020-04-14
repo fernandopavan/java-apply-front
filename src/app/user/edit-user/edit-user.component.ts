@@ -5,7 +5,7 @@ import { MatDialog, DateAdapter, MAT_DATE_LOCALE } from '@angular/material';
 import { first } from 'rxjs/operators';
 import { PessoaFisica } from '../../model/pessoaFisica';
 import { PessoaFisicaService } from '../../service/pessoa-fisica.service';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import { CustomDateAdapter } from 'src/app/custom.date.adapter';
 import { Platform } from '@angular/cdk/platform';
 
@@ -33,40 +33,40 @@ export class EditUserComponent implements OnInit {
     public dialog: MatDialog
   ) { }
 
-  validation_messages = {
-    'nome': [
+  validationMessages = {
+    nome: [
       { type: 'required', message: 'Nome é obrigatório.' }
     ],
-    'dataNascimento': [
+    dataNascimento: [
       { type: 'required', message: 'Data nascimento é obrigatório.' },
     ],
-    'naturalidade': [
+    naturalidade: [
       { type: 'maxlength', message: 'Naturalizade deve possuir no máximo 50 caracteres.' },
     ],
-    'nacionalidade': [
+    nacionalidade: [
       { type: 'maxlength', message: 'Naturalizade deve possuir no máximo 50 caracteres.' },
     ],
-    'cpf': [
+    cpf: [
       { type: 'required', message: 'CPF é obrigatório.' },
     ],
-    'perfis': [
+    perfis: [
       { type: 'required', message: 'É obrigatório selecionar um tipo de perfil.' },
     ]
   };
 
   ngOnInit() {
     this.route.data.subscribe(routeData => {
-      let data = routeData['data'];
+      const data = routeData.data;
       if (data) {
         this.pessoaFisica = data;
         this.pessoaFisica.id = data.id;
         this.createForm();
       }
-    })
+    });
   }
 
   createForm() {
-    let sexo = this.pessoaFisica.sexo === 'MASCULINO' ? '0' : '1';
+    const sexo = this.pessoaFisica.sexo === 'MASCULINO' ? '0' : '1';
     let perfis = this.pessoaFisica.perfis.includes('ADMIN') ? ['0'] : ['1'];
     if (this.pessoaFisica.perfis.includes('ADMIN') && this.pessoaFisica.perfis.includes('PESSOA_FISICA')) {
       perfis = ['0', '1'];
@@ -81,13 +81,13 @@ export class EditUserComponent implements OnInit {
       naturalidade: [this.pessoaFisica.naturalidade],
       nacionalidade: [this.pessoaFisica.nacionalidade],
       cpf: [this.pessoaFisica.cpf, Validators.required],
-      senha: [{ value: "***", disabled: true }],
+      senha: [{ value: '***', disabled: true }],
       perfis: [perfis, Validators.required]
     });
   }
 
   onSubmit() {
-    this.editForm.value.dataNascimento = new Date(this.editForm.value.dataNascimento).toISOString().slice(0,10);
+    this.editForm.value.dataNascimento = new Date(this.editForm.value.dataNascimento).toISOString().slice(0, 10);
     this.editForm.value.senha = this.pessoaFisica.senha;
     this.pessoaFisicaService.update(this.editForm.value)
       .pipe(first())
@@ -101,7 +101,7 @@ export class EditUserComponent implements OnInit {
   delete() {
     Swal.fire({
       title: 'Você tem certeza?',
-      text: "Você não poderá reverter isso!",
+      text: 'Você não poderá reverter isso!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -118,9 +118,9 @@ export class EditUserComponent implements OnInit {
             err => {
               Swal.fire('Erro!', err, 'error');
             }
-          )
+          );
       }
-    })
+    });
 
   }
 

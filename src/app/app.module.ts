@@ -45,7 +45,7 @@ import { CustomDateAdapter } from './custom.date.adapter';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    
+
     MatButtonModule,
     MatInputModule,
     MatSliderModule,

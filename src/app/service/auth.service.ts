@@ -48,5 +48,5 @@ export class AuthService {
     logout() {
         this.storage.setLocalUser(null);
     }
-        
+
 }

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { Router } from '@angular/router';
 import { MatDialog, MAT_DATE_LOCALE, DateAdapter } from '@angular/material';
 import { PessoaFisicaService } from '../../service/pessoa-fisica.service';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import { CustomDateAdapter } from 'src/app/custom.date.adapter';
 import { Platform } from '@angular/cdk/platform';
 
@@ -29,26 +29,26 @@ export class AddUserComponent implements OnInit {
   minDate = new Date(1900, 1, 1);
   date: any;
 
-  validation_messages = {
-    'nome': [
+  validationMessages = {
+    nome: [
       { type: 'required', message: 'Nome é obrigatório.' }
     ],
-    'dataNascimento': [
+    dataNascimento: [
       { type: 'required', message: 'Data nascimento é obrigatório.' },
     ],
-    'naturalidade': [
+    naturalidade: [
       { type: 'maxlength', message: 'Naturalizade deve possuir no máximo 50 caracteres.' },
     ],
-    'nacionalidade': [
+    nacionalidade: [
       { type: 'maxlength', message: 'Naturalizade deve possuir no máximo 50 caracteres.' },
     ],
-    'cpf': [
+    cpf: [
       { type: 'required', message: 'CPF é obrigatório. Somente Nº' },
     ],
-    'senha': [
+    senha: [
       { type: 'required', message: 'Senha é obrigatória.' },
     ],
-    'perfis': [
+    perfis: [
       { type: 'required', message: 'É obrigatório selecionar um tipo de perfil.' },
     ]
   };
@@ -58,7 +58,7 @@ export class AddUserComponent implements OnInit {
   }
 
   onSubmit() {
-    this.addForm.value.dataNascimento = new Date(this.addForm.value.dataNascimento).toISOString().slice(0,10);
+    this.addForm.value.dataNascimento = new Date(this.addForm.value.dataNascimento).toISOString().slice(0, 10);
     this.pessoaFisicaService.create(this.addForm.value)
       .subscribe(data => {
         this.resetFields();

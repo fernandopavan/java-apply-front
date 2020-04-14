@@ -11,10 +11,10 @@ import { PessoaFisicaPage } from 'src/app/model/pessoaFisicaPage';
 })
 export class ListUserComponent implements OnInit {
 
-  searchValue: string = "";
+  searchValue = '';
   pessoasFisicas: PessoaFisica[] = [];
   pagePessoaFisica: PessoaFisicaPage;
-  selectedPage: number = 0;
+  selectedPage = 0;
 
   constructor(
     private router: Router,
@@ -39,15 +39,15 @@ export class ListUserComponent implements OnInit {
     this.pessoaFisicaService.findByName(this.searchValue)
       .subscribe(result => {
         this.pessoasFisicas = result;
-      })
+      });
   }
 
   getPagePessoaFisica(page: number): void {
     this.pessoaFisicaService.findAll(page)
-      .subscribe(page => {
-        this.pagePessoaFisica = page;
-        this.pessoasFisicas = page.content;
-      })
+      .subscribe(response => {
+        this.pagePessoaFisica = response;
+        this.pessoasFisicas = response.content;
+      });
   }
 
   onSelect(page: number): void {

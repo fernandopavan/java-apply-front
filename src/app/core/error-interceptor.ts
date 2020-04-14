@@ -5,7 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { StorageService } from '../service/storage.service';
 import { FieldMessage } from '../model/fieldMessage';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -50,8 +50,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     }
 
     handle403() {
-        this.storage.setLocalUser(null);
-        this.router.navigate(['']);
+        Swal.fire('Erro 403: sem permissão', 'Você tem permissão para esse recurso?', 'question');
     }
 
     handle401() {

@@ -1,8 +1,11 @@
-FROM node:latest
-RUN mkdir /app
-WORKDIR /app
-COPY package.json /app
+### STAGE 1: Build ###
+FROM node:latest AS build
+WORKDIR /usr/src/app
+COPY package.json ./
 RUN npm install
-COPY . /app
-EXPOSE 4200
-CMD ["npm", "start"]
+COPY . .
+RUN npm run build
+
+### STAGE 2: Run ###
+FROM nginx:1.17.1-alpine
+COPY --from=build /usr/src/app/dist/java-apply-front /usr/share/nginx/html

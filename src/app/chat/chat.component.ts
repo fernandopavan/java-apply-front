@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../service/storage.service';
-import SockJS from "sockjs-client"
-import { Stomp } from "@stomp/stompjs"
+import SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
 import { API_CONFIG } from '../config/api.config';
 
 @Component({
@@ -11,7 +11,7 @@ import { API_CONFIG } from '../config/api.config';
 })
 export class ChatComponent implements OnInit {
 
-  topic: string = "/topic/public";
+  topic = '/topic/public';
   stompClient: any;
   message: string;
   username: string;
@@ -26,23 +26,23 @@ export class ChatComponent implements OnInit {
   connect() {
     this.stompClient = Stomp.over(new SockJS(API_CONFIG.baseUrl + '/ws'));
     this.stompClient.connect({}, this.connectionSuccess());
-  };
+  }
 
   connectionSuccess() {
     if (this.stompClient === null || this.stompClient === undefined) {
       return this.connect();
     }
 
-    console.log("Conectado!");
+    console.log('Conectado!');
 
     setTimeout(() => {
-      this.stompClient.subscribe("/topic/public", (message) => {
-        this.onMessageReceived(message)
+      this.stompClient.subscribe('/topic/public', (message) => {
+        this.onMessageReceived(message);
       });
     }, 2000);
 
     setTimeout(() => {
-      this.stompClient.send("/chat.add", {}, JSON.stringify({ sender: this.username, type: 'JOIN' }));
+      this.stompClient.send('/chat.add', {}, JSON.stringify({ sender: this.username, type: 'JOIN' }));
     }, 2000);
 
   }
@@ -51,42 +51,42 @@ export class ChatComponent implements OnInit {
     if (this.stompClient !== null || this.stompClient !== undefined) {
       this.stompClient.disconnect();
     }
-    console.log("Desconectado!");
-    this.msgRecebida = this.username + " SAIU no CHAT!"
+    console.log('Desconectado!');
+    this.msgRecebida = this.username + ' SAIU no CHAT!';
   }
 
   sendMessage() {
-    let chatMessage = {
+    const chatMessage = {
       sender: this.username,
       content: this.message,
       type: 'CHAT'
     };
 
-    console.log("Enviando mensagem: " + chatMessage.sender + ' = ' + chatMessage.content);
-    this.stompClient.send("/chat.send", {}, JSON.stringify(chatMessage));
-    this.message = "";
+    console.log('Enviando mensagem: ' + chatMessage.sender + ' = ' + chatMessage.content);
+    this.stompClient.send('/chat.send', {}, JSON.stringify(chatMessage));
+    this.message = '';
   }
 
   onMessageReceived(message) {
-    var message = JSON.parse(message.body);
+    const message = JSON.parse(message.body);
 
-    console.log("Recebida: " + message);
+    console.log('Recebida: ' + message);
 
     const type = message.type;
     const user = message.sender;
 
     if (type === 'JOIN') {
-      this.msgRecebida = user + " ENTROU no CHAT!"
+      this.msgRecebida = user + ' ENTROU no CHAT!';
       return;
     }
 
     if (type === 'CHAT') {
-      this.msgRecebida = user + " diz: " + message.content;
+      this.msgRecebida = user + ' diz: ' + message.content;
       return;
     }
 
     if (type === 'LEAVE') {
-      this.msgRecebida = user + " SAIU no CHAT!"
+      this.msgRecebida = user + ' SAIU no CHAT!';
     }
   }
 
